@@ -74,17 +74,17 @@
     <form action="javascript:guarda()">
       <header>
         <h1>Ingresa tu videojuego favorito</h1>
-        <button id="agregar" type="button"
+      </header>
+      <button id="agregar" type="button"
          onclick="alta();">Agregar...</button>
         <button type="submit">Guardar</button>
         <button id="eliminar" type="button"
           onclick="elimina();">Eliminar</button>
-      </header>
       <p><input id="nombre" type="text" placeholder="Nombre" required></p>
       <p><input id="genero" type="text" placeholder="Genero" required></p>
       <p><input id="desarrollador" type="text" placeholder="Desarrollador" required></p>
       <ul id="lista">
-        
+        <li><progress max="100">Cargando…</progress></li>
       </ul>
       <mi-footer></mi-footer>
     </form>
