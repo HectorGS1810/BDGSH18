@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width"/>
-    <title>Videojuegos Favoritos</title>
+    <title>Videojuegos PS4</title>
     <script>
       /* invoca a registraServiceWorker instalar la aplicación en el caché del
        * navegador. No se espera a que termine el registro. */
@@ -68,21 +68,45 @@
     <script src="/__/firebase/7.14.6/firebase-storage.js"></script>
     <!-- Carga la configuración de tu proyecto en el servidor de Firebase. -->
     <script src="/__/firebase/init.js"></script>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet">
   </head>
 
   <body>
-    <form action="javascript:guarda()">
+
+    <form >
       <header>
-        <h1>Ingresa tu videojuego favorito</h1>
+        <h1>Juegos para PS4</h1>
+        <div class="ext">
+          <button type="button" class="botonForm2" onclick="extension.classList.toggle('muestra');">
+            <span class="material-icons">more_vert</span>
+          </button>
+          <ul id="extension">
+            <li><button class="botonForm" id="agregar" type="button" onclick="alta();">Agregar</button></li>
+            <li><button class="botonForm" id="guardar" type="button" onclick="guarda();">Guardar</button></li>
+            <li><button class="botonForm" id="eliminar" type="button" onclick="elimina();">Borrar</button></li>
+
+          </ul>
+        </div>
       </header>
-      <button id="agregar" type="button"
-         onclick="alta();">Agregar...</button>
-        <button type="submit">Guardar</button>
-        <button id="eliminar" type="button"
-          onclick="elimina();">Eliminar</button>
-      <p><input id="nombre" type="text" placeholder="Nombre" required></p>
-      <p><input id="genero" type="text" placeholder="Genero" required></p>
-      <p><input id="desarrollador" type="text" placeholder="Desarrollador" required></p>
+    </form>
+    
+    <form>
+      <p class="campo flotante">
+        <input id="nombre" type="text" required>
+        <label for="nombre">Nombre</label>
+    </p>
+    
+    <p class="campo flotante">
+        <input id="ano" type="number" required>
+        <label for="ano">Año</label>
+      </p>
+    
+    <p class="campo flotante">
+        <input id="precio" type="number" required>
+        <label for="precio">Precio (MXN)</label>
+    </p>
+
       <ul id="lista">
         <li><progress max="100">Cargando…</progress></li>
       </ul>
@@ -98,22 +122,17 @@
         /* Pide todos los registros de la colección "PASATIEMPO" ordenados por
          * el campo "PAS_NOMBRE" de forma ascendente. */
         firestore.collection("Videojuegos").orderBy("Vid_Nombre").onSnapshot
-        firestore.collection("Videojuegos").orderBy("Vid_Genero").onSnapshot
-        firestore.collection("Videojuegos").orderBy("Vid_Desarrollador").onSnapshot(
+        firestore.collection("Videojuegos").orderBy("Vid_Ano").onSnapshot
+        firestore.collection("Videojuegos").orderBy("Vid_Precio").onSnapshot(
           documentos => {
             let inner = "";
             documentos.forEach(doc =>
               inner += /* html */
               `<li>
-                <button type=button onclick="muestra('${cod(doc.id)}')">
-                  ${cod(doc.data().Vid_Nombre)}
-                </button>
-                <button type=button onclick="muestra('${cod(doc.id)}')">
-                  ${cod(doc.data().Vid_Genero)}
-                </button>
-                <button type=button onclick="muestra('${cod(doc.id)}')">
-                  ${cod(doc.data().Vid_Desarrollador)}
-                </button>
+                <div class="campo principal" type=button onclick="muestra('${cod(doc.id)}');extension.classList.toggle('muestra');">${cod(doc.data().Vid_Nombre)}</div>
+                <div class="campo" type=button onclick="muestra('${cod(doc.id)}')">${cod(doc.data().Vid_Ano)}</div>
+                <div class="campo" type=button onclick="muestra('${cod(doc.id)}')">${cod(doc.data().Vid_Precio)}</div>
+                
               </li>`);
             lista.innerHTML = inner;
           },
@@ -129,8 +148,8 @@
         eliminar.disabled = true; // Deshabilita el botón "eliminar".
         id = ""; // Pone en blanco el id, porque todavía no agregamos a la BD.
         nombre.value = "";
-        genero.value = "";
-        desarrollador.value = ""; // Pone en blanco los datos porque todavía no hay.
+        ano.value = "";
+        precio.value = ""; // Pone en blanco los datos porque todavía no hay.
       }
       /** Prepara la forma para modificar el documento que corresponde al
        * id seleccionado en el listado.
@@ -146,8 +165,8 @@
             id = doc.id;
             let data = doc.data();
             nombre.value = data.Vid_Nombre || "";
-            genero.value = data.Vid_Genero || "";
-            desarrollador.value = data.Vid_Desarrollador || "";
+            ano.value = data.Vid_Ano || "";
+            precio.value = data.Vid_Precio || "";
           } else {
             alert("El videojuego seleccionado no esta registrado");
             alta();
@@ -160,8 +179,8 @@
         try {
           const modelo = {
             Vid_Nombre: nombre.value.trim(),
-            Vid_Genero: genero.value.trim(),
-            Vid_Desarrollador: desarrollador.value.trim()
+            Vid_Ano: ano.value.trim(),
+            Vid_Precio: precio.value.trim()
           };
           if (id) {
             /* Modifica el modelo en la base de datos en base al id y espera a
