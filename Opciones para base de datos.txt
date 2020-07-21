@@ -1,0 +1,24 @@
+Opción 1: PERSONAJES DE VIDEOJUEGOS
+-Nombre: "Kratos"
+-1° aparición: "God of War"
+-Arma que usa: "Espadas del caos"
+
+Opcion 2: VIDEJUEGOS
+-Nombre: "Dark Souls III"
+-Director: "Hidetaka Miyazaki"
+-Año de lanzamiento: "2016"
+
+Opcion 3: PERSONAJES DE PELICULAS DE TERROR
+-Nombre: "Freddy Krueger"
+-Pelicula: "A Nightmare on Elm Street"
+-Interpretado por: "Robert Englund"
+
+Opcion 4: SMARTPHONES
+-Marca: "Motorola"	
+-Modelo: "G6"
+-Version de SO: "Android 9"
+
+Opcion 5: CANCIONES
+-Nombre: "Cantando"
+-Artista(s): "Violadores del Verso"
+-Album: "Vivir para Contarlo"
